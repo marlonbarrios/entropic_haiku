@@ -1,6 +1,23 @@
 # Entropic Haiku
+![Screenshot 2024-02-21 at 10 45 43 PM](https://github.com/marlonbarrios/entropic_haiku/assets/90220317/74303025-f5ad-4a1f-b4fa-28ab21ae83c3)
+
+
+entropic haiku | duet with latent space
+Powered by GPT-4 and designed in p5.js
+concept, programming, sound design by marlon barrios solano
+
+![Screenshot 2024-02-21 at 10 49 12 PM](https://github.com/marlonbarrios/entropic_haiku/assets/90220317/e0871208-0b04-48c1-8c65-6e5c688a89f4)
 
 Entropic Haiku is a generative, self-dissipating synthetic poem that uses GPT-4 to create Haikus in English and two other languages or codes, such as Morse code or emojis. This unique project leverages the capabilities of OpenAI's GPT-4 model, integrated into a creative p5.js environment to produce an interactive poetic experience. As users interact with the interface, the poem's entropy increases, leading to a dynamic and ephemeral artistic expression. This project is designed exclusively for desktop use, offering a duet in latent space between the user and the AI.
+
+
+
+https://github.com/marlonbarrios/entropic_haiku/assets/90220317/45c1ba2c-4369-4af7-aa12-041fff143579
+
+## Explore More
+
+- **Live Application:** Experience the Bauhaus Time Traveler in action [here](https://entropic-haiku.vercel.app/).
+- **Marlon Barrios Solano:** For more about Marlon, his projects, and how you can support his work, visit his [Linktree](https://linktr.ee/marlonbarriososolano).
 
 ## Features
 
@@ -76,3 +93,25 @@ no manual refresh required!).
 
 Remember to provide your OpenAI API key into `sketch.js`. Note that this is configured
 for local development only, and this code should not be used on a production server.
+
+## MIT License
+
+Copyright (c) 2024 Marlon Barrios Solano
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
