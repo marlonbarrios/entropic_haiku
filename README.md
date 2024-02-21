@@ -20,7 +20,7 @@ The intention to perform actions in latent space, especially with a model, is to
 
 ## Explore More
 
-- **Live Application:** Experience the Bauhaus Time Traveler in action [here](https://entropic-haiku.vercel.app/).
+- **Live Application:** Experience Entrpic Haiku in action [here](https://entropic-haiku.vercel.app/).
 - **Marlon Barrios Solano:** For more about Marlon, his projects, and how you can support his work, visit his [Linktree](https://linktr.ee/marlonbarriososolano).
 
 ## Features
