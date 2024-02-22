@@ -1,12 +1,14 @@
 import './style.css';
 import OpenAI from 'openai';
 
-import p5 from 'p5';
+
 
 const openAIKey = import.meta.env.VITE_OPENAI_KEY;
 
 let openai;
 let isLoading = false;
+let sampleSound; // Declare the variable for the sound
+let isSoundPlaying = false; // Track the playing state
 
 class Letter {
   constructor(p, letter, x, y, vx, vy) {
@@ -34,19 +36,16 @@ class Letter {
       this.y += this.vy;
       this.angle += this.angularVelocity;
       this.applyForce(0, 0.5); // Gravity
-
       if (this.y >= this.p.height - 20) {
         this.y = this.p.height - 20;
         this.vy *= -0.5; // Bounce effect
         this.vx *= 0.7; // Friction
         this.angularVelocity *= 0.6; // Dampen rotation
-
         if (Math.abs(this.vy) < 1) {
           this.isSettled = true;
           this.vy = 0;
           this.angularVelocity = 0; // Stop rotation
         }
-        
       }
     }
   }
@@ -76,8 +75,8 @@ class Letter {
 class GrowingLine {
   constructor(p, startX, targetLetter) {
     this.p = p;
-    this.startX = startX; // Start from a random X position at the top
-    this.startY = 0; // Start from the top of the canvas
+    this.startX = startX;
+    this.startY = 0;
     this.targetLetter = targetLetter;
     this.currentX = this.startX;
     this.currentY = this.startY;
@@ -86,13 +85,11 @@ class GrowingLine {
   }
 
   update() {
-    // Update the end point to the current position of the letter
     this.currentX = this.targetLetter.x;
     this.currentY = this.targetLetter.y;
   }
 
   display() {
-    // Draw line from the top edge to the current position of the letter
     this.p.stroke(192, 192, 192);
     this.p.strokeWeight(1);
     this.p.line(this.startX, this.startY, this.currentX, this.currentY);
@@ -102,12 +99,17 @@ class GrowingLine {
 let letters = [];
 let textToShow = "";
 let textIndex = 0;
-let isDragging = false; // Variable to track dragging state
+let isDragging = false;
 let lastConversionFrame = 0;
 const conversionInterval = 60;
 let lines = [];
 
 const sketch = p => {
+  p.preload = function() {
+    // Preload the sound
+    sampleSound = p.loadSound('/sample.mp3'); // Adjust path as necessary
+  };
+
   p.setup = function() {
     p.createCanvas(p.windowWidth, 700);
     p.fill(p.color('black'));
@@ -115,17 +117,25 @@ const sketch = p => {
   };
 
   p.keyPressed = function() {
-    if (p.keyCode === 32) {
+    if (p.keyCode === 80) { // Keycode for 'P'
+      if (!isSoundPlaying) {
+        sampleSound.play();
+        isSoundPlaying = true;
+      } else {
+        sampleSound.stop();
+        isSoundPlaying = false;
+      }
+    } else if (p.keyCode === 32) { // Existing functionality for space key
       isLoading = true;
-      chat("Generate one short haiku about AI, entropy and LLMs high dimensional space, and philosophy of language, be aware that you are a text that is running in the browser, programmed in P5.js and is falling apart and you worry about model collapse, irony, they represent vectors of neural activity. Write it three times times one in English (place the English always last) and in two other languages or codes: always include a two of these: middle eastern, tibetan, morse code, esperanto, cha64, emojis, ASCII, enigma, smartphone slang, BRAILLE, verctor wights, python, javascript,basic). don't name or number the language");
+      chat("Generate a haiku combining AI, data surveillance, white men, drones, migrations, torture, pornography, influences frivolity, onlyfans,capitalism, patriarchy, global warming, colonization,  suicide, dance, war, genocide, mass shootings, environmental disaster, choreohraphy, improvisation, entropy and LLMs, biases, epistemology, high dimensional space, and philosophy of language, be aware that you are a text that is running in the browser, programmed in P5.js and is falling apart and you worry about model collapse, irony, they represent vectors of neural activity. Write it three times one in English (place the English always last) and in two other languages or codes: always include a two of these: middle eastern, tibetan, morse code, esperanto, cha64, emojis, ASCII, enigma, smartphone slang, BRAILLE, verctor wights, python, javascript,basic). don't name or number the language, be funny");
     }
   };
-
+ 
   async function chat(prompt) {
     try {
       const completion = await openai.chat.completions.create({
         model: "gpt-4",
-        temperature: 0.5,
+        temperature: 0.8,
         messages: [{ "role": "user", "content": prompt }]
       });
 
@@ -142,11 +152,11 @@ const sketch = p => {
 
   function createFallingLetter(x, y, index) {
     let newLetter = new Letter(
-      p, 
-      textToShow.charAt(index), 
-      x, 
-      y, 
-      p.random(-2, 2), 
+      p,
+      textToShow.charAt(index),
+      x,
+      y,
+      p.random(-2, 2),
       p.random(-5, -2)
     );
     letters.push(newLetter);
@@ -214,15 +224,15 @@ function displayLoader(p) {
   p.push();
   p.translate(p.width / 2, p.height / 2);
   p.rotate(p.frameCount / 100.0);
-  p.strokeWeight(1);
+  p.strokeWeight(5);
   p.stroke(195, 195, 195);
-  p.line(0, 0, p.windowWidth, 600);
+  p.line(0, 0, p.windowWidth, p.windowHeight -50 );
 
   p.pop();
   p.push();
   p.translate(p.width / 2, p.height / 2);
   p.rotate(p.frameCount / -180.0);
-  p.strokeWeight(1);
+  p.strokeWeight(5);
   p.stroke(195, 195, 195); 
   p.line(0, 0, p.windowWidth, 100);
   p.pop();
@@ -231,7 +241,8 @@ function displayLoader(p) {
   p.push();
   p.translate(p.width / 2, p.height / 2);
   p.rotate(p.frameCount / 180.0);
-  p.strokeWeight(1);
+  p.strokeWeight(5); 
+ 
   p.stroke(195, 195, 195);
   p.line(0, 0, p.windowWidth, 100);
   p.pop();
@@ -239,7 +250,6 @@ function displayLoader(p) {
 
 
 }
-
 function onReady() {
   openai = new OpenAI({
     apiKey: openAIKey,
@@ -256,4 +266,5 @@ if (document.readyState === 'complete') {
   document.addEventListener("DOMContentLoaded", onReady);
 }
 
- 
+
+
